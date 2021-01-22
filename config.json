@@ -1,6 +1,6 @@
 {
 	"prefix": "$",
-	"token": "yout bot api key here",
+	"token": "your bot api key here",
 	"bot_test_token": "your test bot api key here",
 	"etherscan_api_key": "your api key here"
 }
