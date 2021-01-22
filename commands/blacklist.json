@@ -1,0 +1,4 @@
+{
+    "blacklist_id" : ["STEAM_0:1:000000000", "STEAM_0:1:000000001"],
+    "blacklist_name" : ["example person 1", "example person 2"]
+}
