@@ -7,3 +7,4 @@ node
 axios
 discord.js
 request-promise
+xml-parse
