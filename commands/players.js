@@ -1,7 +1,7 @@
 const axios = require("axios");
 const xml = require("xml-parse");
 const Discord = require('discord.js');
-const { blacklist_id, blacklist_name } = require('./blacklist.json');
+const { blacklist_lookup } = require('./blacklist.json');
 
 // list of different links for the different servers.
 const jb_api_link = 'https://prestigegaming.gameme.com/api/serverinfo/74.91.113.83:27015/players';
@@ -78,28 +78,28 @@ module.exports = {
 			}
 
 			// loop through each blacklisted id and check if it is anywhere in the responce then if it is lookup the name from the blacklist_name array and add the name to the list
-			for (let i = 0; i < blacklist_id.length; i++) {
-				if (scrape.includes(blacklist_id[i]) === true) {
-					blacklist = blacklist.concat(blacklist_name[i], '\n');
+			for (let i = 1; i < blacklist_lookup.length; i += 2) {
+				if (scrape.includes(blacklist_lookup[i]) === true) {
+					blacklist = blacklist.concat(blacklist_lookup[i - 1], '\n');
 				}
 			}
 
 			// Make embed and only add each section if there is somthing to display
 			const Player_result = new Discord.MessageEmbed().setColor('#0099ff').setTitle('Players').setFooter("Map: " + map[0].innerXML);
 			if (T_list_1.length) {
-				Player_result.addFields({ name: "Terrorists: ", value: T_list_1, inline: true });
+				Player_result.addFields({ name: "**Terrorists: **", value: T_list_1, inline: true });
 			}
 			if (T_list_2.length) {
 				Player_result.addFields({ name: ".", value: T_list_2, inline: true });
 			}
 			if (CT_list.length) {
-				Player_result.addFields({ name: "Counter Terrorists: ", value: CT_list, inline: true });
+				Player_result.addFields({ name: "**Counter Terrorists: **", value: CT_list, inline: true });
 			}
 			if (SPEC_list.length) {
-				Player_result.addFields({ name: "Spectators: ", value: SPEC_list, inline: true });
+				Player_result.addFields({ name: "**Spectators: **", value: SPEC_list, inline: true });
 			}
 			if (blacklist.length) {
-				Player_result.addFields({ name: "Blacklist: ", value: blacklist, inline: true });
+				Player_result.addFields({ name: "**Blacklist: **", value: blacklist, inline: true });
 			}
 
 			// send message with results
