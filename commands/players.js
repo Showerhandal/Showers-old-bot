@@ -10,6 +10,7 @@ const TTT_api_link = 'https://prestigegaming.gameme.com/api/serverinfo/74.91.113
 const surf_api_link = 'https://prestigegaming.gameme.com/api/serverinfo/66.85.14.237:27015/players';
 const bhop_api_link = 'https://prestigegaming.gameme.com/api/serverinfo/74.91.124.34:27015/players';
 let link = "";
+let split_T = true;
 
 module.exports = {
 	name: 'players',
@@ -22,9 +23,18 @@ module.exports = {
 		// server arg select
 		if (!args.length || args[0].toLowerCase() === 'jb') {link = jb_api_link;}
 		else if (args[0].toLowerCase() === 'ttt') {link = TTT_api_link;}
-		else if (args[0].toLowerCase() === 'mg') {link = minigames_api_link;}
-		else if (args[0].toLowerCase() === 'surf') {link = surf_api_link;}
-		else if (args[0].toLowerCase() === 'bhop') {link = bhop_api_link;}
+		else if (args[0].toLowerCase() === 'mg') {
+			link = minigames_api_link;
+			split_T = false;
+		}
+		else if (args[0].toLowerCase() === 'surf') {
+			link = surf_api_link;
+			split_T = false;
+		}
+		else if (args[0].toLowerCase() === 'bhop') {
+			link = bhop_api_link;
+			split_T = false;
+		}
 
 		// scrape the website to get xml string
 		async function scrapewebsite() {
@@ -61,7 +71,8 @@ module.exports = {
 
 				// sort players based on teams into their different lists also split T's into 2 lists
 				if (team === "TERRORIST" && i % 2 == 0) {T_list_1 = T_list_1.concat(name, '\n');}
-				else if (team === "TERRORIST" && i % 2 == 1) {T_list_2 = T_list_2.concat(name, '\n');}
+				else if (team === "TERRORIST" && i % 2 == 1 && split_T == true) {T_list_2 = T_list_2.concat(name, '\n');}
+				else if (team === "TERRORIST" && split_T == false) {T_list_1 = T_list_1.concat(name, '\n');}
 				else if (team === "CT") {CT_list = CT_list.concat(name, '\n');}
 				else if (team === "Spectator") {SPEC_list = SPEC_list.concat(name, '\n');}
 			}
